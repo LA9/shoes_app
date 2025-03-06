@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shoes_app/HomePage.dart';
-import 'package:shoes_app/ProductCard.dart';
-import 'package:shoes_app/product_details.dart';
 
 void main() {
   runApp(const App());
@@ -29,7 +27,7 @@ class App extends StatelessWidget {
           appBarTheme: AppBarTheme(
               centerTitle: true,
               titleTextStyle: TextStyle(fontSize: 20, color: Colors.black))),
-      home: ProductDetails(product: getShoesList()[0]),
+      home: HomePage(),
     );
   }
 }
