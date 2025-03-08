@@ -12,11 +12,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<Widget> pages = [ShoppingPage(), CartPage()];
   int currentPageIndex = 0;
+  String _title= "";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+        appBar:AppBar(
+        title:Text(_title),
+      ),
       body: pages[currentPageIndex],
       bottomNavigationBar: BottomNavigationBar(
           selectedFontSize: 0,
@@ -27,6 +30,7 @@ class _HomePageState extends State<HomePage> {
           onTap: (value) {
             setState(() {
               currentPageIndex = value;
+               _onTitlePageChanged(value); 
             });
           },
           items: [
@@ -34,6 +38,15 @@ class _HomePageState extends State<HomePage> {
             BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: ""),
           ]),
     );
+  }
+
+  void _onTitlePageChanged(int value) {
+            switch(value) { 
+           case 0: { _title = ''; } 
+           break; 
+           case 1: { _title = 'Cart'; } 
+           break;
+          } 
   }
 }
 

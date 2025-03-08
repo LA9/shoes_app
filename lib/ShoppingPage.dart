@@ -8,25 +8,28 @@ class ShoppingPage extends StatefulWidget {
   });
 
 
+
+
   @override
   State<ShoppingPage> createState() => _ShoppingPageState();
 }
 
 class _ShoppingPageState extends State<ShoppingPage> {
-
   
     List<Map<String, dynamic>> shoesList = getShoesList();
-
   @override
   Widget build(BuildContext context) {
     
 
-    return Column(
-      children: [
-        Header(),
-        FilterList(),
-        ProductsList(shoesList: shoesList),
-      ],
+    return Scaffold(
+    
+      body: Column(
+        children: [
+          Header(),
+          FilterList(),
+          ProductsList(shoesList: shoesList),
+        ],
+      ),
     );
   }
 }
@@ -199,6 +202,7 @@ List<Map<String, dynamic>> getShoesList() {
       'size': [45, 47, 49, 50],
       'company': 'Adidas',
       'imageUrl': 'assets/images/shoes_2.jpeg',
+
     },
     {
       'id': 3,
