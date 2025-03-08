@@ -1,0 +1,1 @@
+ /home/ahmed/Dev/Flutter/Projects/shoes_app/.dart_tool/flutter_build/330c616ad150ac2b6f0055944ef18bce/native_assets.yaml: 
