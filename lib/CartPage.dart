@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shoes_app/CartProvider.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -10,18 +12,46 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
+    List<Map<String, dynamic>> cartList =
+        context.watch<CartProvider>().cartList;
+
     return Scaffold(
-    
       body: ListView.builder(
-        itemCount: cart.length,
+        itemCount: cartList.length,
         itemBuilder: (context, index) {
           return Dismissible(
-            key: Key(cart[index]["title"]),
+            key: UniqueKey(),
             direction: DismissDirection.horizontal,
             onDismissed: (direction) {
-              setState(() {
-                cart.removeAt(index);
-              });
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    backgroundColor: Colors.white,
+                    title: Text('Confirm Deletion' ,style:TextStyle( fontWeight: FontWeight.bold)),
+                    content: Text('Are you sure you want to delete this item?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('Cancel', style:TextStyle(color:Colors.green , fontWeight: FontWeight.bold)),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          context
+                              .read<CartProvider>()
+                              .removeCart(cartList[index]);
+
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('Delete', style:TextStyle(color:Colors.red, fontWeight: FontWeight.bold)),
+                      ),
+                    ],
+                    
+                  );
+                },
+              );
             },
             child: Container(
               decoration: BoxDecoration(
@@ -44,9 +74,9 @@ class _CartPageState extends State<CartPage> {
               margin: EdgeInsets.all(10),
               padding: EdgeInsets.all(8),
               child: ListTile(
-                leading: Image.asset(cart[index]["imageUrl"]),
-                title: Text(cart[index]["title"]),
-                subtitle: Text('\$${cart[index]["price"]}'),
+                leading: Image.asset(cartList[index]["imageUrl"]),
+                title: Text(cartList[index]["title"]),
+                subtitle: Text('\$${cartList[index]["price"]}'),
               ),
             ),
           );
@@ -56,47 +86,11 @@ class _CartPageState extends State<CartPage> {
   }
 }
 
-List cart = [
-  {
-    'id': "2",
-    'title': "Nike Shoes",
-    'price': "90",
-    'imageUrl': "assets/images/shoes_1.jpeg",
-    'company': "Nike",
-    'size': "45",
-  },
-  {
-    'id': "2",
-    'title': "Addidas Shoes",
-    'price': "70",
-    'imageUrl': "assets/images/shoes_3.jpeg",
-    'company': "Addidas",
-    'size': "45",
-  },
-  {
-    'id': "2",
-    'title': "Addidas Shoes",
-    'price': "70",
-    'imageUrl': "assets/images/shoes_3.jpeg",
-    'company': "Addidas",
-    'size': "45",
-  },
-  {
-    'id': "2",
-    'title': "Addidas Shoes",
-    'price': "70",
-    'imageUrl': "assets/images/shoes_3.jpeg",
-    'company': "Addidas",
-    'size': "45",
-  },
-  {
-    'id': "2",
-    'title': "Addidas Shoes",
-    'price': "70",
-    'imageUrl': "assets/images/shoes_3.jpeg",
-    'company': "Addidas",
-    'size': "45",
-  },
-
-
-];
+  // {
+  //   'id': "2",
+  //   'title': "Nike Shoes",
+  //   'price': "90",
+  //   'imageUrl': "assets/images/shoes_1.jpeg",
+  //   'company': "Nike",
+  //   'size': "45",
+  // }
